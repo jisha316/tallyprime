@@ -386,7 +386,7 @@ urlpatterns = [
     path('unit_com',views.unit_com,name='unit_com'),
     
     path('load_stock_item_creation',views.load_stock_item_creation,name='load_stock_item_creation'),
-    path('stock_items',views.stock_items,name='stock_items'),
+    path('stock_items_creation',views.stock_items_creation,name='stock_items_creation'),
     path('stock_accuracy',views.stock_accuracy,name='stock_accuracy'),
     path('load_company_price',views.load_company_price,name='load_company_price'),
     path('price_levels',views.price_levels,name='price_levels'),

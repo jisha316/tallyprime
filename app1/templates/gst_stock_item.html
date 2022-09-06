@@ -17,7 +17,14 @@
         <div class="row container-fluid  p-2 m-0">
             <div class="col-sm-3 m-0 p-0"></div>  
             <div class="col-sm-6 m-0 p-0">
-                <h6  class="bg-info text-light p-2 m-0 text-left">GST Details</h6>
+                <div class="row bg-info text-light p-2 m-0">
+                    <div class="col-md-6"><b>GST Details</b></div>
+                    <div class="col-md-6">
+                        {% for i in tally %}
+                            {{i.name}}
+                        {% endfor %}
+                    </div>
+                </div>
                 <h6  class=" text-light p-2 m-0 text-center" style="background-color: rgba(0,0,0,.4);">GST Details for Company
                     <center>
                         <!-- <input type="text" class="form-control inp" id="stock_name"> -->

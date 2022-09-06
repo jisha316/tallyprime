@@ -53,7 +53,14 @@
         <div class="row container-fluid  p-2 m-0">
             <div class="col-sm-3 m-0 p-0"></div>  
             <div class="col-sm-6 m-0 p-0">
-                <h6  class="bg-info text-light p-2 m-0 text-left" style="background-color: rgba(0,0,0,.4);">Price Levals<a href="javascript:history.go(-2);" class="close">&times;</a></h6>
+                <div class="row bg-info text-light p-2 m-0">
+                    <div class="col-md-6"><b>Price Levals</b></div>
+                    <div class="col-md-6">
+                        {% for i in tally %}
+                        {{i.name}}
+                    {% endfor %}
+                    </div>
+                </div>
                 <form class="p-4" style="background-color:rgba(0,0,0,.4);" method="post" action="{% url 'price_levels' %}" autocomplete="off">
                     {% csrf_token %}
                     <h6  class="bg-trasparent text-light p-2 m-0 text-center">Company Price Levals</h6>

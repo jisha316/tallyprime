@@ -79,13 +79,14 @@
         <div class="row container-fluid p-2 m-0">
             <div class="col-sm-3 m-0 p-0"></div>  
             <div class="col-sm-6 m-0 p-0">
-                <h6  class="bg-info text-light p-2 m-0 text-left">Stock Category Creation
-                    <div style="margin-top: -17px; text-align: center;">
+                <div class="row bg-info text-light p-2 m-0">
+                    <div class="col-md-6"><b>Stock Category Creation</b></div>
+                    <div class="col-md-6">
                         {% for i in tally %}
-                            {{i.name}}
-                        {% endfor %}
+                        {{i.name}}
+                    {% endfor %}
                     </div>
-                </h6>
+                </div>
                 <form class="p-3" style="background-color:rgba(0,0,0,.4);" method="post" action="{% url 'stock_catagory' %}" autocomplete="off">
                     {% csrf_token %}
                     <div class="p-3">

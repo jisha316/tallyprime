@@ -63,20 +63,27 @@
         }
 </style>
     <div class="m-3">
-        <h6 class="bg-info text-light m-0 p-2">Stock Item Allocation</h6>
+        <div class="row bg-info text-light p-2 m-0">
+            <div class="col-md-6"><b>Stock Item Allocation</b></div>
+            <div class="col-md-6">
+                {% for i in tally %}
+                {{i.name}}
+            {% endfor %}
+            </div>
+        </div>
         <div class="p-3" style="background-color:rgba(0,0,0,.4);">
             <center>
                 <div class="row container-fluid  p-2 m-0">
-                    <div class="col-sm-3 m-0 p-0"></div>
-                    <div class="col-sm-3 m-0 p-0"><label for="a">Allocation of : </label></div>
-                    <div class="col-sm-2 m-0 p-0"><input type="text" class="inp text-center" id="dt" name="stockname" ></div>
+                    <div class="col-sm-5 m-0 p-0"></div>
+                    <div class="col-sm-1 m-0 p-0"><label for="a">Allocation of : </label></div>
+                    <div class="col-sm-1 m-0 p-0"><input type="text" class="inp text-center" id="dt" name="stockname" style="width: 60px;"></div>
                     <div class="col-sm-1 m-0 p-0"></div>
                 </div>
                 <div class="row container-fluid  p-2 m-0">
-                    <div class="col-sm-4 m-0 p-0"></div>
-                    <div class="col-sm-2 m-0 p-0"><label for="a">For</label></div>
-                    <div class="col-sm-1 m-0 p-0"><input type="text" class="inp text-center" id="ft" name="stockname" ></div>
-                    <div class="col-sm-4 m-0 p-0"></div>
+                    <div class="col-sm-5 m-0 p-0"></div>
+                    <div class="col-sm-1 m-0 p-0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label for="a">For</label></div>
+                    <div class="col-sm-1 m-0 p-0"><input type="text" class="inp text-center" id="ft" name="stockname" style="width: 60px;"></div>
+                    <div class="col-sm-1 m-0 p-0"></div>
                 </div>
             </center>
             <div class="table-responsive-sm" style="background-color:rgba(0,0,0,0.4);">
