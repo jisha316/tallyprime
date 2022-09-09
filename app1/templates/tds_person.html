@@ -12,10 +12,16 @@
         <div class="row container-fluid  p-2 m-0">
             <div class="col-sm-3 m-0 p-0"></div>  
             <div class="col-sm-6 m-0 p-0">
-                <h6  class="bg-info text-light p-2 m-0 text-left"><a href="javascript:history.go(-2);" class="close">&times;</a>
-                    Person Responsible Details
-                </h6>
-                <form class="p-4" style="background-color:rgba(0,0,0,.4);" method="post" action="{% url 'person_tds' company.id %}" autocomplete="off">
+                <div class="row bg-info text-light p-2 m-0">
+                    <div class="col-md-6">Person Responsible Details</div>
+                    <div class="col-md-6">
+                        {% for i in tally %}
+                            {{i.name}}
+                        {% endfor %}
+                    </div>
+                </div>
+            
+                <form class="p-4" style="background-color:rgba(0,0,0,.4);" method="post" action="{% url 'person_tds' %}" autocomplete="off">
                     {% csrf_token %}
                     <h6  class=" text-light p-2 m-0 text-center">Person Responsible Details</h6>
                     <div class="p-3">

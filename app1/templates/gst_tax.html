@@ -20,9 +20,16 @@
         <div class="row container-fluid  p-2 m-0">
             <div class="col-sm-3 m-0 p-0"></div>  
             <div class="col-sm-6 m-0 p-0">
-                <h6  class="bg-info text-light p-2 m-0 text-left">GST Details</h6>
+                <div class="row bg-info text-light p-2 m-0">
+                    <div class="col-md-5">GST Details</div>
+                    <div class="col-md-6">
+                        {% for i in tally %}
+                        {{i.name}}
+                    {% endfor %}
+                    </div>
+                </div>
                 <h6  class=" text-light p-2 m-0 text-center" style="background-color: rgba(0,0,0,.4);">GST Details for Company</h6>
-                <form class="p-5" style="background-color:rgba(0,0,0,.4);" method="post" action="{% url 'create_gsttax' company.id %}" autocomplete="off">
+                <form class="p-5" style="background-color:rgba(0,0,0,.4);" method="post" action="{% url 'create_gsttax' %}" autocomplete="off">
                     {% csrf_token %}
                     <h6  class="bg-trasparent text-light p-2 m-0 text-left">Tax Details <br><i><p>{{company.fin_begin}}</p></i></h6>
                     <div class="p-3">
@@ -76,8 +83,12 @@
                                     <div class="modal-body"><br>
                                         <div class="row container-fluid  p-2 m-0">
                                             <div class="col-sm-4 m-0 p-0"> <label for="a">Appicable From</label></div>
-                                            <div class="col-sm-8 m-0 p-0"><input type="text" name="appicable_from" class="form-control"
-                                                value="{{company.fin_begin}}"></div>
+                                            <div class="col-sm-8 m-0 p-0">
+                                                {% for i in tally %}
+                                                    <input type="date" name="appicable_from" class="form-control"
+                                                        value="{{i.fin_begin|date:'Y-m-d'}}">
+                                                {% endfor %}
+                                            </div>
                                             <div class="col-sm-2 m-0 p-0"></div>
                                         </div>   
                                     </div>

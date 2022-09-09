@@ -13,9 +13,14 @@
         <div class="row container-fluid  p-2 m-0">
             <div class="col-sm-3 m-0 p-0"></div>  
             <div class="col-sm-6 m-0 p-0">
-                <h6  class="bg-info text-light p-2 ">Currency Creation</h6>
-                <div  style="text-align: center;margin-top:-35px;font-weight:900">{{cmp.name}}</div>
-    <div hidden  style="text-align: center;margin-top:-35px;font-weight:900">{{cmp.id}}</div>
+                <div class="row bg-info text-light p-2 m-0">
+                    <div class="col-md-6">Currency Creation</div>
+                    <div class="col-md-2">
+                        {% for i in tally %}
+                            {{i.name}}
+                        {% endfor %}
+                    </div>
+                </div>
                 <form class="p-4" style="background-color:rgba(0,0,0,.4);" method="post" action="{% url 'create_currency'  %}" autocomplete="off">
                     {% csrf_token %}
                     <div class="p-3">

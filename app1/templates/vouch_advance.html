@@ -10,10 +10,16 @@
     </style>
 
     <div class="m-2">
-        <h6  class="bg-info text-light p-2 m-0 text-left">Voucher Type Creation (Secondary) <a href="javascript:history.go(-1);" class="close">&times;</a></h6>
-        <div  style="text-align: center;margin-top:-35px;font-weight:900">{{cmp.name}}</div>
-        <div hidden  style="text-align: center;margin-top:-35px;font-weight:900">{{cmp.id}}</div>
-        <form class="p-0" style="background-color:rgba(0,0,0,.4);" method="post" action="{% url 'create_voucher_advance' cmp.id %}" autocomplete="off">
+        <div class="row bg-info text-light p-2 m-0">
+            <div class="col-md-6">Voucher Type Creation (Secondary)</div>
+            <div class="col-md-6">
+                {% for i in tally %}
+                    {{i.name}}
+                {% endfor %}
+            </div>
+        </div>
+        
+        <form class="p-0" style="background-color:rgba(0,0,0,.4);" method="post" action="{% url 'create_voucher_advance' %}" autocomplete="off">
             {% csrf_token %}
             <div class="p-3">
                 <div class="col-sm-6 m-0 p-4">
@@ -66,9 +72,17 @@
                                         <option value="Yearly">Yearly</option>
                                     </select>
                                 </td>      
-                                <td><input type="date" value="2022-04-01" data-date-format="DD/MM/YYYY" class="form-control" name="prefix_applicable_dt"></td>
+                                <td>
+                                    {% for i in tally %}
+                                        <input type="date" value="{{i.fin_begin|date:'Y-m-d'}}" class="form-control" name="prefix_applicable_dt">
+                                    {% endfor %}
+                                </td>
                                 <td><input type="text" class="w-100 form-control" name="prefix_particular"></td>
-                                <td><input type="date" value="2022-04-01" data-date-format="DD/MM/YYYY" class="form-control" name="suffix_applicable_dt"></td>
+                                <td>
+                                    {% for i in tally %}
+                                        <input type="date" value="{{i.fin_begin|date:'Y-m-d'}}" class="form-control" name="suffix_applicable_dt">
+                                    {% endfor %}
+                                </td>
                                 <td><input type="text" class="w-100 form-control" name="suffix_particular"></td>
                                 <td> <button class="btn btn-info">Accept</button></td> 
                             </tr>    

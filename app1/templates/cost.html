@@ -11,40 +11,46 @@
             position: absolute;
             top: 3px;
             right: 8px;
+            transform: rotate(0deg);
             font-size: 17px;
             color: rgb(255, 255, 255);
             cursor: pointer;
             text-decoration: none;
         }
-    
-    .form-popup {
-        display: none;
-        position: fixed;
-        top: 150px;
-        right: 15px;
-        border: 1px solid #f1f1f1;
-        z-index: 9;
-        width: 300px;
-        height: 400px;
-    }
-    
+        .btns_prnt{
+            color: #fff;
+            width: 100%;
+            cursor:pointer;
+            background-color: rgba(240, 248, 255, 0);
+            border: none;
+        }
+        .btns_prnt:hover{
+            background-color:#5bc9e4;
+            color: rgb(15, 14, 14);
+        }
+        .bt{
+            text-align: end;
+        }
+        .form-popup {
+            display: none;
+            position: fixed;
+            top: 150px;
+            right: 15px;
+            border: 1px solid #f1f1f1;
+            z-index: 9;
+            width: 300px;
+            height: 400px;
+        }
+        
       .content a:hover {background-color: rgb(238, 167, 75);}
-      
-      /* Add styles to the form container */
-      .form-container {
-        max-width: 50px;
-        height: 500px;
-        padding: 10px;
-      }
+    
       .form-container1 {
         max-width: 350px;
         height: 500px;
         padding: 2px;
        
       }
-      body{
-        overflow: hidden;
-      }
+    
     </style>
     <script>
         function closeForm() {
@@ -55,11 +61,11 @@
         }
         function setPrimary(){
         document.getElementById('under').value= 'Primary';
-        document.getElementById('underForm').style.visibility= "hidden";
+        document.getElementById('underForm').style.visibility= "block";
         }
         function setCostcentre(under,underId){
             document.getElementById('under').value= under;
-            document.getElementById('underForm').style.visibility= "hidden";
+            document.getElementById('underForm').style.visibility= "block";
             document.getElementsByName('underhidden').value= underId;
         }
     </script>
@@ -67,8 +73,14 @@
         <div class="row container-fluid  p-2 m-0">
             <div class="col-sm-3 m-0 p-0"></div>  
             <div class="col-sm-6 m-0 p-0">
-                <h6  class="bg-info text-light p-2 m-0 text-center">Cost Centre Creation</h6>
-                <h6  class="text-light p-2 m-0 text-center" style="background-color:rgba(0,0,0,.4);">{{cmp.company_name}}</h6>
+                <div class="row bg-info text-light p-2 m-0">
+                    <div class="col-md-6">Cost Centre Creation</div>
+                    <div class="col-md-2">
+                        {% for i in tally %}
+                            {{i.name}}
+                        {% endfor %}
+                    </div>
+                </div>
                 <form class="p-3" style="background-color:rgba(0,0,0,.4);" method="post" action="{% url 'load_centre' %}" autocomplete="off">
                     {% csrf_token %}
                     <div class="p-3">
@@ -99,20 +111,18 @@
     <div class="form-popup" id="underForm" style="background-color: #213b52" >
         <form action="" class="form-container1" >
             <h6 style="background-color:rgb(17, 169, 240) ;color:white">List of Banks<a href="" class="close"></a></h6>
-            <a  href="{% url 'cost_alt' %}" style="margin-left:180px;color:#fff;cursor:pointer">Create</a>  
+            <a  href="{% url 'cost_alt' %}" style="cursor:pointer" class="btn bt btns_prnt" role="button">Create New</a>  
     
-        <hr >
+        <hr>
         <div>
-            <table >
-            <tr >
-                <a onclick="setPrimary()" style="color:#fff;cursor:pointer">&nbsp;&nbsp;Primary</a><br>
-            {% for i in costt %}
-           
-        
-            <a onclick="setCostcentre('{{i.cname}}','{{i.id}}')"  class="content" 
-            style="cursor:pointer;color:#fff;">&nbsp;&nbsp;{{i.cname}}</a><br>
-            {% endfor %}
-            </tr>
+            <table>
+                <tr>
+                    <option onclick="setPrimary()" class="btns_prnt">&nbsp;&nbsp;Primary</option>
+
+                    {% for i in costt %}
+                        <option onclick="setCostcentre('{{i.cname}}','{{i.id}}')" class="btns_prnt">&nbsp;&nbsp;{{i.cname}}</option>
+                    {% endfor %}
+                </tr>
             </table>
         </div>
         <input type="text" name="underhidden" hidden value="{{i.id}}">

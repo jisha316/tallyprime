@@ -91,7 +91,6 @@
                     <tr>
                         <!-- <th>Sl.no</th> -->
                         <th>Godown</th>
-                        <th>Branch</th>
                         <th>Quantity</th>
                         <th>Rate</th>
                         <th>Per</th>
@@ -104,11 +103,11 @@
                       <td> 
                         <input type="text" id="under" name="under_name" class="form-control" onclick="showform();">
                         </td>
-                      <td> <input type="text" class="w-100 form-control"></td>
-                      <td><input type="text" class="w-100 form-control" id="quantity"> </td>
+            
+                      <td><input type="text" class="w-100 form-control" id="quantity" onblur="passquantity()"> </td>
                       <td> <input type="text" class="w-100 form-control" id="rate" onblur="passrate()"></td>
                       <td><input type="text" class="w-100 form-control" id="per" onblur="passper()"> </td>
-                      <td> <input type="text" class="w-100 form-control" id="v" onblur="passvalue()"></td>
+                      <td> <input type="text" class="w-100 form-control" id="value" onblur="passvalue()"></td>
                       
                       <td><a href="javascript:history.go(-1);"><button class="btn btn-info">Accept</button></a></td> 
             
@@ -166,11 +165,14 @@
             document.getElementsByName('underhidden').value= underId;
         }
 
-        document.getElementById("ft").value = localStorage.getItem("quantity");
+        document.getElementById("value").value = localStorage.getItem("amount");
+
+        document.getElementById("per").value = localStorage.getItem("units");
 
         document.getElementById("dt").value = localStorage.getItem("status");
 
-        // document.getElementById("per").innerHTML = localStorage.getItem("p");
+        document.getElementById("ft").value = localStorage.getItem("quantity");
+
         function checker(){
             var result =confirm('Are you sure?');
             if (result==false){
@@ -178,14 +180,15 @@
             }
         }
         function passvalue(){
-            var value1 = document.getElementById('v').value;
-            console.log(value1);
-
-            localStorage.setItem("value1",value1);
-            var a = localStorage.getItem('value1');
-            console.log(a);                     
+            var value=document.getElementById("value").value;
+            localStorage.setItem("value", value);
+            var a=localStorage.getItem("value");                         
         }
-        
+        function passquantity(){
+            var quantity=document.getElementById("quantity").value;
+            localStorage.setItem("quantity", quantity);
+            var qua=localStorage.getItem("quantity");                         
+        }
         function passrate(){
             var rate=document.getElementById("rate").value;
             localStorage.setItem("rate", rate);
@@ -224,7 +227,7 @@
         $('#quantity, #rate').on('input',function(){
             var quantity = parseFloat($('#quantity').val()) || 0;
             var rate = parseFloat($('#rate').val()) || 0;
-            $('#v').val(quantity * rate);    
+            $('#value').val(quantity * rate);    
         });
     </script>
 

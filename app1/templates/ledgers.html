@@ -111,7 +111,7 @@
                         <div class="row container-fluid p-2 m-0 hide" id="bankod_a/c">
                             <div class="col-sm-6 m-0 p-0"> <label for="pan">Set OD limit</label></div>
                             <div class="col-sm-6 m-0 p-0">
-                                <input type="text" value="{{cmp.name}}" class="form-control" id="odlimit" name="set_odl">
+                                <input type="text" class="form-control" id="odlimit" name="set_odl">
                             </div>  
                         </div>
                     </div>
@@ -122,7 +122,9 @@
                         <div class="row container-fluid  p-2 m-0">
                             <div class="col-sm-6 m-0 p-0"> <label for="pan">A/c Holder's Name</label></div>
                             <div class="col-sm-6 m-0 p-0">
-                                <input type="text" value="" class="form-control" id="cmpnam" placeholder="" name="ac_holder_nm">
+                                {% for i in tally %}
+                                    <input type="text" value="{{i.name}}" class="form-control" placeholder="" name="ac_holder_nm">
+                                {% endfor %}  
                             </div>  
                         </div>
                         <div class="row container-fluid  p-2 m-0">
@@ -134,14 +136,15 @@
                         <div class="row container-fluid  p-2 m-0">
                             <div class="col-sm-6 m-0 p-0"> <label for="pan">IFS Code</label></div>
                             <div class="col-sm-6 m-0 p-0">
-                                <input type="text" class="form-control" id="ifs" pattern="^[A-Za-z]{4}[a-zA-Z0-9]{7}$" name="ifsc_code">
+                                <input type="text" class="form-control" id="ifs" pattern="^[A-Za-z]{4}[a-zA-Z0-9]{7}$"
+                                 title="Please fill valid format Eg:AXIS1234567" maxlength="11" name="ifsc_code">
                             </div> 
                         </div>
                         <div class="row container-fluid  p-2 m-0">
                             <div class="col-sm-6 m-0 p-0"> <label for="pan">SWIFT Code</label></div>
                             <div class="col-sm-6 m-0 p-0">
                                 <input type="text" class="form-control" id="swift" name="swift_code" maxlength="11" 
-                                pattern="^[a-zA-Z]{6}[0-9a-zA-Z]{5}$" title="Please fill valid format">
+                                pattern="^[a-zA-Z]{6}[0-9a-zA-Z]{5}$" title="Please fill valid format Eg : AAAAAA99999">
                             </div>  
                         </div>
                         <div class="row container-fluid   p-2 m-0">
@@ -451,7 +454,7 @@
                             <div class="col-sm-6 m-0 p-0"> <label for="e">GSTIN / UIN</label></div>
                             <div class="col-sm-6 m-0 p-0"><input type="text" class="form-control" name="gst_uin" placeholder="" id=""
                                 pattern="^([0][1-9]|[1-2][0-9]|[3][0-7])([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$"
-                            title="Please enter required gst NUMBER format 22AAAAA1234A1ZA ." required>
+                            title="Please enter valid GST Number Eg: 22AAAAA1234A1ZA" required>
                             </div>
                         </div>
                         <div class="row container-fluid  p-2 m-0">
@@ -1137,7 +1140,7 @@
             var a = status.value;
             if(a=="Yes"){
 
-                window.location.href="{% url 'cheque' %}"
+                window.location.href="{% url 'ledger_chequebk' %}"
             }
         }
         function bankd(){
@@ -1145,7 +1148,7 @@
             var a = status.value;
             if(a=="Yes"){
 
-                window.location.href="{% url 'bank_details' %}"
+                window.location.href="{% url 'ledger_bd' %}"
             }
         }
         function ledgergst(){

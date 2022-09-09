@@ -11,22 +11,30 @@
 			display: none;
     	}
         .inp{
-            text-align: center;
-            background-color: rgba(0,0,0,.4);
             border: none;
+            color: #fff;
+            background-color: rgba(0,0,0,.001);
+            width: 100px;
         }
     </style>
+
     <script>
         document.getElementById("nm").value = localStorage.getItem("status");
     </script>
+
   <div class="m-2">
-        <h6 class="bg-info text-light p-2 m-0 text-left"><a href="javascript:history.go(-1);" class="close">&times;</a>
-            Cheque Dimensions
-        </h6>
+        <div class="row bg-info text-light p-2 m-0">
+            <div class="col-md-6">Cheque Dimensions</div>
+            <div class="col-md-6">
+                {% for i in tally %}
+                    {{i.name}}
+                {% endfor %}
+            </div>
+        </div>
+
         <h6 class="text-light p-2 m-0 text-center" style="background-color:rgba(0,0,0,.4);">Cheque Printing Configuration for
-        <p><i>(All Dimensions in mm only)</i></p>   </h6> 
-        <input type="text" class="form-control inp" id="ledname">
-            
+        <p><i>(All Dimensions in mm only)</i></p> 
+        <center><input type="text" class="form-control inp text-center" id="ledname"></center></h6>
         
         <form class="p-2" style="background-color:rgba(0,0,0,.4);" method="post" action="{% url 'create_ledgerdimension' %}" autocomplete="off">
             {% csrf_token %}
@@ -168,7 +176,11 @@
                     <h5 class="p-3 text-center">Company Signatory Details</h5> 
                     <div class="row container-fluid p-2" id="">
                         <div class="col-sm-6 m-0 p-0"> <label for="l">Company Name on Cheque</label></div>
-                        <div class="col-sm-6 m-0 p-0"><input type="text" id="cname" name="company_name" class="form-control"></div>
+                        <div class="col-sm-6 m-0 p-0">
+                            {% for i in tally %}
+                                <input type="text" id="cname" name="company_name" value="{{i.name}}" class="form-control">
+                            {% endfor %}
+                        </div>
                     </div>
                     <div class="row container-fluid  p-2">
                         <div class="col-sm-6 m-0 p-0"> <label for=""></label>Print Company Name on Cheque</div>

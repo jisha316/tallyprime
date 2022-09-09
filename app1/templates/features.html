@@ -1,4 +1,4 @@
-{% extends 'index1.html' %}
+{% extends 'base.html' %}
     {% block body %}
     {% load static %}
     <style>
@@ -13,15 +13,25 @@
     </style>
 
     <div class="m-3">
-        <h6  class="bg-info text-light p-2 m-0 text-left">Company Features Alteration</h6>
-        <form class="p-5" style="background-color:rgba(0,0,0,.4);" method="post" action="{% url 'company_feature' cmp.id  %}">
+        <div class="row bg-info text-light p-2 m-0">
+            <div class="col-md-6">Company Features Alteration</div>
+            <div class="col-md-6">
+                {% for i in tally %}
+                {{i.name}}
+            {% endfor %}
+            </div>
+        </div>
+        
+        <form class="p-5" style="background-color:rgba(0,0,0,.4);" method="post" action="{% url 'company_feature'  %}">
             {% csrf_token %}
             <div class="p-3">
                 <hr>
                 <div class="row container-fluid  p-2 m-0">
                     <div class="col-sm-1 m-0 p-0"> <label for="a">Company : </label></div>
                     <div class="col-sm-2 m-0 p-0">
-                        {{cmp.name}}
+                        {% for i in tally %}
+                            {{i.name}}
+                        {% endfor %}
                     </div>
                 </div>
                 <hr>
@@ -291,7 +301,7 @@
                 </div>
             </div> 
             <div class="row container-fluid  p-0 m-0" style=" border: 1px solid rgba(128, 128, 128, 0.6);">
-                <div class=" text-center" ><button class="btn btn-info w-15">ACCEPT</button></div>   
+                <div class="enter w-100 py-4"><button class="btn btn-info w-15">ACCEPT</button></div>   
             </div>
                 
         </form>
@@ -414,7 +424,7 @@
             var a = status.value;
             if(a=="Yes"){
 
-                window.location.href="{% url 'tally_gst' cmp.id %}" 
+                window.location.href="{% url 'tally_gst' %}" 
             }
             else{
                 document.getElementById('enbgst').style.display="flex";
@@ -425,7 +435,7 @@
             var a = status.value;
             if(a=="Yes"){
 
-                 window.location.href="{% url 'tds' cmp.id %}"
+                 window.location.href="{% url 'tds' %}"
             }
             else{
                 document.getElementById('enbtds').style.display="flex";
@@ -433,7 +443,4 @@
         }
     </script>
     
-
-  
-
 {% endblock %}

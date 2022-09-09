@@ -48,8 +48,15 @@
         })
     </script>
     <div class="m-0">
-        <h6  class="bg-info text-light p-2 m-0 text-left">Company GST Details</h6>
-        <form class="p-5" style="background-color:rgba(0,0,0,.4);" method="post" action="{% url 'create_gst' company.id %}" autocomplete="off">
+        <div class="row bg-info text-light p-2 m-0">
+            <div class="col-md-6"><b>Company GST Details</b></div>
+            <div class="col-md-6">
+                {% for i in tally %}
+                    {{i.name}}
+                {% endfor %}
+            </div>
+        </div>
+        <form class="p-5" style="background-color:rgba(0,0,0,.4);" method="post" action="{% url 'create_gst' %}" autocomplete="off">
             {% csrf_token %}
             <div class="p-3">
                 <h5  class="bg-trasparent text-light p-2 m-0 text-center">GST Details</h5>
@@ -103,7 +110,7 @@
                     <div class="row container-fluid  p-2" id="regtype">
                         <div class="col-sm-6 m-0 p-0"> <label for="d">Registration Type</label></div>
                         <div class="col-sm-6 m-0 p-0">
-                            <select name="registration_type" id="regtype0" class="form-control" onchange="showregtype()">
+                            <select name="reg_typ" id="regtype0" class="form-control" onchange="showregtype()">
                                 <option value="Composition" >Composition</option> 
                                 <option value="Regular" selected>Regular</option>       
                             </select>    
@@ -142,7 +149,7 @@
                     <div class="row container-fluid  p-2" id="aot1">
                         <div class="col-sm-6 m-0 p-0"> <label for="d">Assessee of Teritory</label></div>
                         <div class="col-sm-6 m-0 p-0">
-                            <select name="assessee_territory" id="aot" class="form-control" onchange="showaot()">
+                            <select name="assess_of_teritory" id="aot" class="form-control" onchange="showaot()">
                                 <option value="No">No</option> 
                                 <option value="Yes">Yes</option>       
                             </select>    
@@ -150,14 +157,17 @@
                     </div>
                     <div class="row container-fluid  p-2">
                         <div class="col-sm-6 m-0 p-0"> <label for="d">GST Application From</label></div>
-                        <div class="col-sm-6 m-0 p-0"><input type="text" name="gst_applicable" class="form-control"
-                            value="{{company.fin_begin}}" ></div>
+                        <div class="col-sm-6 m-0 p-0">
+                            {% for i in tally %}
+                                <input type="date" value="{{i.fin_begin|date:'Y-m-d'}}" class="form-control" name="gst_application" required>
+                            {% endfor %}
+                        </div>
                     </div>
                     <div class="row container-fluid  p-2">
                         <div class="col-sm-6 m-0 p-0"> <label for="e">GSTIN / UIN</label></div>
-                        <div class="col-sm-6 m-0 p-0"><input type="text" name="gstin_uin" class="form-control" id="c" placeholder=""
+                        <div class="col-sm-6 m-0 p-0"><input type="text" name="uin" class="form-control" id="c" placeholder=""
                             pattern="^([0][1-9]|[1-2][0-9]|[3][0-7])([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$"
-                            title="Please enter valid GST Number." required>
+                            title="Please enter required gst NUMBER format 22AAAAA1234A1ZA ." required>
                         </div>
                     </div>
                     <div class="row container-fluid  p-2" id="gstr1">
@@ -174,7 +184,7 @@
                         <div class="row container-fluid p-2 m-0" id="fldces">
                             <div class="col-sm-6 m-0 p-0"> <label for="c">Kerala Flood Cess Application</label></div>
                             <div class="col-sm-6 m-0 p-0">
-                                <select name="kerala_fca" id="flood_cess" class="form-control" onchange="showfloodcess()">
+                                <select name="flood_access" id="flood_cess" class="form-control" onchange="showfloodcess()">
                                     <option value="No">No</option>
                                     <option value="Yes">Yes</option> 
                                 </select>
@@ -182,14 +192,16 @@
                         </div>
                         <div class="row container-fluid hide p-2 m-0" id="appform">
                             <div class="col-sm-6 m-0 p-0"> <label for="">&nbsp;&nbsp;&nbsp;&nbsp;Applicable Form</label></div>
-                            <div class="col-sm-6 m-0 p-0"><input type="text" name="applicable_from" class="form-control"
-                                value="{{company.fin_begin}}">
+                            <div class="col-sm-6 m-0 p-0">
+                                {% for i in tally %}
+                                    <input type="date" value="{{i.fin_begin|date:'Y-m-d'}}" class="form-control" name="applicable_from"  required>
+                                {% endfor %}
                             </div> 
                         </div>
                         <div class="row container-fluid  p-2 m-0">
                             <div class="col-sm-6 m-0 p-0"> <label for="c">Set / Alter GST rate details</label></div>
                             <div class="col-sm-6 m-0 p-0">
-                                <select name="gst_rate_details" id="set_alter" class="form-control" onchange="showgst()">
+                                <select name="set_alter" id="gst" class="form-control" onchange="showgstc()">
                                     <option value="No">No</option>
                                     <option value="Yes">Yes</option> 
                                 </select>
@@ -198,7 +210,7 @@
                         <div class="row container-fluid  p-2 m-0">
                             <div class="col-sm-6 m-0 p-0"> <label for="c">Enable tax liability on advance receipts</label></div>
                             <div class="col-sm-6 m-0 p-0">
-                                <select name="tl_advanceR" id="e" class="form-control">
+                                <select name="tax_liability_advance" id="e" class="form-control">
                                     <option value="No">No</option>
                                     <option value="Yes">Yes</option> 
                                 </select>
@@ -209,7 +221,7 @@
                                 <br><p><i>&nbsp;&nbsp;&nbsp;&nbsp;(Purchase from unregistered dealer)</i></p></label>
                             </div>
                             <div class="col-sm-6 m-0 p-0">
-                                <select name="tl_reverseC" id="e" class="form-control">
+                                <select name="tax_liability_reverse" id="e" class="form-control">
                                     <option value="No">No</option>
                                     <option value="Yes">Yes</option> 
                                 </select>
@@ -218,7 +230,7 @@
                         <div class="row container-fluid  p-2 m-0">
                             <div class="col-sm-6 m-0 p-0"> <label for="c">Enable GST classifications</label></div>
                             <div class="col-sm-6 m-0 p-0">
-                                <select name="gst_classification" id="e" class="form-control">
+                                <select name="gst_clss" id="e" class="form-control">
                                     <option value="No">No</option>
                                     <option value="Yes">Yes</option> 
                                 </select>
@@ -227,7 +239,7 @@
                         <div class="row container-fluid  p-2 m-0">
                             <div class="col-sm-6 m-0 p-0"> <label for="c">Provide LUT/Bond details</label></div>
                             <div class="col-sm-6 m-0 p-0">
-                                <select name="lut_bond" id="lutbond" class="form-control" onchange="showlutbond()">
+                                <select name="lut_but" id="lut" class="form-control" onchange="showlut()">
                                     <option value="No">No</option>
                                     <option value="Yes">Yes</option> 
                                 </select>
@@ -240,7 +252,7 @@
                             <div class="col-sm-6 m-0 p-0"><label for="">Tax rate for taxable turnover
                                 <br><p><i>&nbsp;&nbsp;&nbsp;&nbsp;(From 1-Apr-22)</i></p>
                             </label></div>
-                            <div class="col-sm-6 m-0 p-0"><input type="text" name="tax_rate" class="form-control" id="" value="1%"></div> 
+                            <div class="col-sm-6 m-0 p-0"><input type="text" name="tax_rate_turnover" class="form-control" id="" value="1%"></div> 
                         </div>
                         <div class="row container-fluid  p-2 m-0">
                             <div class="col-sm-6 m-0 p-0"> 
@@ -249,7 +261,7 @@
                                 </label>
                             </div>
                             <div class="col-sm-6 m-0 p-0">
-                                <select name="tax_calculation" id="e" class="form-control">
+                                <select name="tax_cal" id="tax" class="form-control" onchange="showtax()">
                                     <option value="Taxable value">Taxable value</option> 
                                     <option value="Taxable Nil rated values">Taxable, Exempt and Nil rated values</option>
                                 </select>
@@ -258,7 +270,7 @@
                         <div class="row container-fluid  p-2 m-0">
                             <div class="col-sm-6 m-0 p-0"> <label for="c">Enable tax rate for purchase</label></div>
                             <div class="col-sm-6 m-0 p-0">
-                                <select name="tax_purchase" id="e" class="form-control">
+                                <select name="tax_rate_purchase" id="e" class="form-control">
                                     <option value="No">No</option>
                                     <option value="Yes">Yes</option> 
                                 </select>
@@ -276,7 +288,7 @@
                     <div class="row container-fluid  p-2" id="e-way">
                         <div class="col-sm-6 m-0 p-0"> <label for="d">e-Way bill applicable</label></div>
                         <div class="col-sm-6 m-0 p-0">
-                            <select name="e_waybillA" id="id_e_way" class="form-control">
+                            <select name="e_way_bill" id="id_e_way" class="form-control">
                                 <option value="Yes" selected="true">Yes</option>
                                 <option value="No">No</option> 
                             </select>
@@ -286,15 +298,17 @@
                     <div class="container-fluid  p-0" id="e-way_bill">
                         <div class="row container-fluid  p-2">
                             <div class="col-sm-6 m-0 p-0"> <label for="d">&nbsp;&nbsp;&nbsp;&nbsp;Applicable Form</label></div>
-                            <div class="col-sm-6 m-0 p-0"><input type="text" name="applicable_f" class="form-control"
-                                value="{{company.fin_begin}}"></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                {% for i in tally %}
+                                    <input type="date" value="{{i.fin_begin|date:'Y-m-d'}}" class="form-control" name="appl_from"  required>
+                                {% endfor %}
+                            </div>
                         </div>
                         
-
                         <div class="row container-fluid  p-2">
                             <div class="col-sm-6 m-0 p-0"> <label for="d">&nbsp;&nbsp;&nbsp;&nbsp;Threshold limit include</label></div>
                             <div class="col-sm-6 m-0 p-0">
-                                <select name="thresholdlimit_include" id="e" class="form-control">
+                                <select name="th_limlit_in" id="e" class="form-control">
                                     <option value="Invoice Value">Invoice Value</option>
                                     <option value="Taxable and exempt goods value">Taxable and exempt goods value</option> 
                                     <option value="Taxable goods value">Taxable goods value</option> 
@@ -304,13 +318,13 @@
 
                         <div class="row container-fluid  p-2">
                             <div class="col-sm-6 m-0 p-0"> <label for="d">&nbsp;&nbsp;&nbsp;&nbsp;Threshold limit</label></div>
-                            <div class="col-sm-6 m-0 p-0"><input type="text" name="threshold_limit" class="form-control" id="d" placeholder="" value="50000"></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" name="th_limit" class="form-control" value="50000"></div>
                         </div>
 
                         <div class="row container-fluid  p-2">
                             <div class="col-sm-6 m-0 p-0"> <label for="d">&nbsp;&nbsp;&nbsp;&nbsp;Applicable for intrastate</label></div>
                             <div class="col-sm-6 m-0 p-0">
-                                <select name="intrastate" id="e" class="form-control">
+                                <select name="appl_intrastate" id="e" class="form-control">
                                     <option value="Yes">Yes</option>
                                     <option value="No">No</option> 
                                 </select>
@@ -319,13 +333,13 @@
 
                         <div class="row container-fluid  p-2">
                             <div class="col-sm-6 m-0 p-0"> <label for="d">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Threshold Limit</label></div>
-                            <div class="col-sm-6 m-0 p-0"><input type="text" name="ithreshold_limit" class="form-control" id="d" placeholder="" value="50000"></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" name="thr_limit" class="form-control" id="d" placeholder="" value="50000"></div>
                         </div>
 
                         <div class="row container-fluid  p-2">
                             <div class="col-sm-6 m-0 p-0"> <label for="d">&nbsp;&nbsp;&nbsp;&nbsp;Print e-Way Bill with invoice</label></div>
                             <div class="col-sm-6 m-0 p-0">
-                                <select name="print_eway" id="e" class="form-control">
+                                <select name="p_e_way" id="e" class="form-control">
                                     <option value="No">No</option>
                                     <option value="Yes">Yes</option> 
                                 </select>
@@ -336,7 +350,7 @@
                     <div class="row container-fluid  p-2" id="e_invoice">
                         <div class="col-sm-6 m-0 p-0"> <label for="d">e-Invoice applicable</label></div>
                         <div class="col-sm-6 m-0 p-0">
-                            <select name="e_invoiceA" id="id_e_invoice" class="form-control" >
+                            <select name="e_invoice" id="id_e_invoice" class="form-control" >
                                 <option value="No" selected="true">No</option>
                                 <option value="Yes">Yes</option> 
                             </select>
@@ -346,17 +360,20 @@
                     <div class="container-fluid p-0" id="e-Invoice_applicable">
                         <div class="row container-fluid  p-2" id="">
                             <div class="col-sm-6 m-0 p-0"> <label for="">&nbsp;&nbsp;&nbsp;&nbsp;Applicable Form</label></div>
-                            <div class="col-sm-6 m-0 p-0"><input type="text" name="app_f" class="form-control"
-                                value="{{company.fin_begin}}"></div> <br><br>
+                            <div class="col-sm-6 m-0 p-0">
+                                {% for i in tally %}
+                                    <input type="date" value="{{i.fin_begin|date:'Y-m-d'}}" class="form-control" name="appli_frm"  required>
+                                {% endfor %}
+                            </div> <br><br>
                         </div>
                         <div class="row container-fluid  p-2" id="">
                             <div class="col-sm-6 m-0 p-0"> <label for="d">&nbsp;&nbsp;&nbsp;&nbsp;Bill From Place</label></div>
-                            <div class="col-sm-6 m-0 p-0"><input type="text" name="billfrom_place" class="form-control" id="d" placeholder=""></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" name="bill_from_place" class="form-control"></div>
                         </div>
 
                         <div class="row container-fluid  p-2" id="">
                             <div class="col-sm-6 m-0 p-0"> <label for="d">&nbsp;&nbsp;&nbsp;&nbsp;Default period for the e-Invoice report</label></div>
-                            <div class="col-sm-6 m-0 p-0"><input type="text" name="period_einvoiceR" class="form-control" id="d" placeholder="" value="3 days"></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" name="period_report" class="form-control" value="3 days"></div>
                         </div>
 
                         <div class="row container-fluid  p-2" id="">
@@ -364,7 +381,7 @@
                                 <br><p><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Applicable for sales transactions)</i></p></label>
                             </div>
                             <div class="col-sm-6 m-0 p-0" id="">
-                                <select name="send_eW_details_einvoice" id="e" class="form-control">
+                                <select name="send_eway_bill" id="e" class="form-control">
                                     <option value="Yes">Yes</option>
                                     <option value="No">No</option> 
                                 </select>
@@ -419,26 +436,28 @@
             }
         }
 
-        function showgst(){
-            var status = document.getElementById("set_alter");
+        function showgstc(){
+            var status = document.getElementById("gst");
             var a = status.value;
             if(a=="Yes"){
-
-                window.location.href="{% url 'gst_tax' company.id %}"
-            }
-            else{
-                document.getElementById('taxli').style.display="flex";
+    
+                window.location.href="{% url 'gst_tax' %}"
             }
         }
-        function showlutbond(){
-            var status = document.getElementById("lutbond");
+        function showlut(){
+            var status = document.getElementById("lut");
             var a = status.value;
             if(a=="Yes"){
-
+    
                 window.location.href="{% url 'lut_bond' %}"
             }
-            else{
-                document.getElementById('lutbnd').style.display="flex";
+        }
+        function showtax(){
+            var status = document.getElementById("tax");
+            var a = status.value;
+            if(a=="Taxable Nil rated values"){
+    
+                window.location.href="{% url 'load_rev_c' %}"
             }
         }
     </script>

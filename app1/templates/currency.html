@@ -31,15 +31,22 @@
         }
         </style>
 
-        <div class="card"><br><br><br><br>
-          <p class="price">Currency ₹ exists by defualt for the company.</p>
-          <p>Do you want to alter currency ₹ or create a new currency ?</p>
+        <div class="card"><br>
+          <center>
+            {% for i in tally %}
+              {{i.name}}
+            {% endfor %}
+            <hr>
+          </center>
+      
+          <br>
+          <p class="price">Currency <span>{% for i in tally %} {{i.currency_symbol}} {% endfor %} </span> exists by defualt for the company.</p>
+            
+          <p>Do you want to alter currency <span>{% for i in tally %} {{i.currency_symbol}} {% endfor %}</span> or create a new currency ?</p>
           <div>
-            <a href="{% url 'c_create' %}" class="btn btn-outline-warning w-15">C:CREATE</a>&nbsp;&nbsp;&nbsp;
-              <a href="{% url 'c_alter' %}" class="btn btn-outline-info w-15">A:ALTER</a>
-          </div><br><br><br><br>
-          <!-- <div class="enter w-100 py-4"><a href="c_create" class="btn btn-outline-warning w-15">C:CREATE</a>
-          <div class="enter w-100 py-4"><a href="c_alter" class="btn btn-outline-info w-15">A:ALTER</a></div>  -->
+            <a href="{% url 'c_create' %}" class="btn btn-outline-warning w-15">C:Create New</a>&nbsp;&nbsp;&nbsp;
+              <a href="{% url 'c_alter' %}" class="btn btn-outline-info w-15">A:Alter Existing </a>
+          </div><br><br><br>
         </div>
         
 {% endblock %}
